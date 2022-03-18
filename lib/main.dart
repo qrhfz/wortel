@@ -37,24 +37,81 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: const [
-            Spacer(),
-            Center(
-              child: WordTiles(size: 5),
-            ),
-            Spacer(),
-            KeyboardRow(
-              letters: ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-            ),
-            KeyboardRow(
-              letters: ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-            ),
-            KeyboardRow(
-              letters: ["Z", "X", "C", "V", "B", "N", "M"],
-            ),
-            Spacer(),
-          ],
+        child: BlocBuilder<WordCubit, WordState>(
+          builder: (context, state) {
+            return state.when(
+              game: (words, disabledLetters) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 36),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'WORTL',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              BlocProvider.of<WordCubit>(context).reset();
+                            },
+                            icon: const Icon(Icons.refresh),
+                          )
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    const Center(
+                      child: WordTiles(size: 5),
+                    ),
+                    const Spacer(),
+                    const KeyboardRow(
+                      letters: [
+                        "Q",
+                        "W",
+                        "E",
+                        "R",
+                        "T",
+                        "Y",
+                        "U",
+                        "I",
+                        "O",
+                        "P"
+                      ],
+                    ),
+                    const KeyboardRow(
+                      letters: ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+                    ),
+                    const KeyboardRow(
+                      letters: ["Z", "X", "C", "V", "B", "N", "M"],
+                    ),
+                    const Spacer(),
+                  ],
+                );
+              },
+              finish: (answer) => Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      answer,
+                      style: const TextStyle(
+                        fontSize: 64,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        BlocProvider.of<WordCubit>(context).reset();
+                      },
+                      icon: const Icon(Icons.refresh, size: 32),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -78,12 +135,21 @@ class WordTiles extends StatelessWidget {
         (x) => Row(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(size, (y) {
+            // return Container();
             return BlocBuilder<WordCubit, WordState>(
               buildWhen: (previous, current) {
-                return previous.words[x][y] != current.words[x][y];
+                return previous.whenOrNull(
+                      game: (words, disabledLetters) => words[x][y],
+                    ) !=
+                    current.whenOrNull(
+                      game: (words, disabledLetters) => words[x][y],
+                    );
               },
               builder: (context, state) {
-                return LetterTile(state.words[x][y]);
+                return state.maybeWhen(
+                  game: (words, disabledLetters) => LetterTile(words[x][y]),
+                  orElse: () => Container(),
+                );
               },
             );
           }),

@@ -13,8 +13,8 @@ part 'word_cubit.freezed.dart';
 class WordCubit extends Cubit<WordState> {
   WordCubit({
     required this.size,
-  }) : super(WordState(_makeTable(size), const KtList.empty())) {
-    getRandomWord();
+  }) : super(WordState.game(_makeTable(size), const KtList.empty())) {
+    _getRandomWord();
   }
   final int size;
   int get lastIndex => size - 1;
@@ -23,8 +23,9 @@ class WordCubit extends Cubit<WordState> {
 
   late String answer;
 
-  void getRandomWord() {
+  void _getRandomWord() {
     answer = wordList[Random().nextInt(wordList.length)];
+    dev.log(answer);
   }
 
   void submitLetter(String letter) {
@@ -32,11 +33,20 @@ class WordCubit extends Cubit<WordState> {
 
     final newTable = _makeNewTable(letter);
 
-    final disabledLetters = x == lastIndex
-        ? _updateDisabledLetter(letter, newTable[y])
-        : state.triedLetters;
-
-    emit(WordState(newTable, disabledLetters));
+    var disabledLetters = state.maybeWhen(
+      game: (words, disabledLetters) {
+        if (x == lastIndex) {
+          return disabledLetters.toMutableList()
+            ..addAll(_updateDisabledLetter(letter, newTable[y]));
+        }
+        return disabledLetters;
+      },
+      orElse: () => const KtList<String>.empty(),
+    );
+    if (y == lastIndex && x == lastIndex) {
+      return emit(WordState.finish(answer));
+    }
+    emit(WordState.game(newTable, disabledLetters));
     _moveCoor();
   }
 
@@ -45,7 +55,7 @@ class WordCubit extends Cubit<WordState> {
     KtList<LetterState> word,
   ) {
     KtMutableList<String> letters = KtMutableList.empty();
-
+    dev.log(word.toString());
     word.forEach(
       (letterState) => letterState.maybeWhen(
         wrongTotally: (letter) => letters.add(letter),
@@ -57,32 +67,37 @@ class WordCubit extends Cubit<WordState> {
   }
 
   KtList<KtList<LetterState>> _makeNewTable(String letter) {
-    final words = state.words.toMutableList();
-    final word = words[y].toMutableList();
+    final table = state.maybeWhen<KtMutableList<KtList<LetterState>>>(
+      game: (words, disabledLetters) => words.toMutableList(),
+      orElse: () => KtMutableList.empty(),
+    );
+    final word = table[y].toMutableList();
 
     word[x] = LetterState.loaded(letter);
+    dev.log(word.toString());
     late KtList<LetterState> newWord;
     if (x == lastIndex) {
-      newWord = word.map(
-        (a) => _evaluateLetter(
+      newWord = word.mapIndexed(
+        (index, a) => _evaluateLetter(
           a.maybeWhen(
             loaded: (letter) => letter,
             orElse: () => "",
           ),
+          index,
         ),
       );
     } else {
       newWord = word.toList();
     }
 
-    words[y] = newWord;
+    table[y] = newWord;
 
-    final newWords = words.toList();
+    final newWords = table.toList();
     return newWords;
   }
 
-  LetterState _evaluateLetter(String letter) {
-    if (letter == answer[x]) {
+  LetterState _evaluateLetter(String letter, int index) {
+    if (letter == answer[index]) {
       return LetterState.correct(letter);
     } else if (answer.contains(letter)) {
       return LetterState.wrongPlace(letter);
@@ -112,5 +127,12 @@ class WordCubit extends Cubit<WordState> {
         ),
       ),
     );
+  }
+
+  void reset() {
+    _getRandomWord();
+    x = 0;
+    y = 0;
+    emit(WordState.game(_makeTable(5), const KtList.empty()));
   }
 }
