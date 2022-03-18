@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:wortel/cubit/word_cubit.dart';
 import 'package:wortel/tile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'cubit/letter_state.dart';
 import 'keyboard.dart';
 
 void main() {
@@ -68,46 +71,61 @@ class WordTiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WordCubit, WordState>(
-      builder: (context, state) {
-        return Column(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(
+        size,
+        (x) => Row(
           mainAxisSize: MainAxisSize.min,
-          children: List.generate(
-            size,
-            (x) => Row(
-              mainAxisSize: MainAxisSize.min,
-              children: List.generate(
-                size,
-                (y) => Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: state.words[x][y].when(
-                    loaded: (letter) => Tile(letter: letter),
-                    correct: (String letter) {
-                      return Tile(
-                        letter: letter,
-                        color: Colors.green,
-                      );
-                    },
-                    empty: () => const Tile(),
-                    wrongPlace: (String letter) {
-                      return Tile(
-                        letter: letter,
-                        color: Colors.yellow,
-                      );
-                    },
-                    wrongTotally: (String letter) {
-                      return Tile(
-                        letter: letter,
-                        color: Colors.red,
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
+          children: List.generate(size, (y) {
+            return BlocBuilder<WordCubit, WordState>(
+              buildWhen: (previous, current) {
+                return previous.words[x][y] != current.words[x][y];
+              },
+              builder: (context, state) {
+                return LetterTile(state.words[x][y]);
+              },
+            );
+          }),
+        ),
+      ),
+    );
+  }
+}
+
+class LetterTile extends StatelessWidget {
+  const LetterTile(
+    this.state, {
+    Key? key,
+  }) : super(key: key);
+  final LetterState state;
+  @override
+  Widget build(BuildContext context) {
+    log('build');
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: state.when(
+        loaded: (letter) => Tile(letter: letter),
+        correct: (String letter) {
+          return Tile(
+            letter: letter,
+            color: const Color(0xFF33BA91),
+          );
+        },
+        empty: () => const Tile(),
+        wrongPlace: (String letter) {
+          return Tile(
+            letter: letter,
+            color: const Color(0xFFEBB951),
+          );
+        },
+        wrongTotally: (String letter) {
+          return Tile(
+            letter: letter,
+            color: const Color(0xFFFF4B40),
+          );
+        },
+      ),
     );
   }
 }

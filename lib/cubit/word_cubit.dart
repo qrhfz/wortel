@@ -1,6 +1,9 @@
+import 'dart:math';
+import 'dart:developer' as dev;
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/collection.dart';
+import 'package:wortel/daftar-kata-clean.dart';
 
 import 'letter_state.dart';
 
@@ -10,13 +13,19 @@ part 'word_cubit.freezed.dart';
 class WordCubit extends Cubit<WordState> {
   WordCubit({
     required this.size,
-  }) : super(WordState(_makeTable(size), const KtList.empty()));
+  }) : super(WordState(_makeTable(size), const KtList.empty())) {
+    getRandomWord();
+  }
   final int size;
   int get lastIndex => size - 1;
   int x = 0;
   int y = 0;
 
-  final String answer = "ABANG";
+  late String answer;
+
+  void getRandomWord() {
+    answer = wordList[Random().nextInt(wordList.length)];
+  }
 
   void submitLetter(String letter) {
     if (y > lastIndex) return;
