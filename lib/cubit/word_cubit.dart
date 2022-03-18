@@ -16,26 +16,39 @@ class WordCubit extends Cubit<WordState> {
   int x = 0;
   int y = 0;
 
+  final String answer = "ABANG";
+
   void submitLetter(String letter) {
     if (y > lastIndex) return;
 
-    final triedLetters = makeNewTriedLetters(letter);
+    final disabledLetters = _updateDisabledLetter(letter);
     final newTable = _makeNewTable(letter);
 
-    emit(WordState(newTable, triedLetters));
+    emit(WordState(newTable, disabledLetters));
     _moveCoor();
   }
 
-  KtList<String> makeNewTriedLetters(String letter) {
-    final triedLetters = state.triedLetters.toMutableList();
-    triedLetters.add(letter);
-    return triedLetters;
+  KtList<String> _updateDisabledLetter(String letter) {
+    final letters = state.triedLetters.toMutableList();
+
+    if (!answer.contains(letter)) {
+      letters.add(letter);
+    }
+
+    return letters;
   }
 
   KtList<KtList<LetterState>> _makeNewTable(String letter) {
     final words = state.words.toMutableList();
     final word = words[y].toMutableList();
-    word[x] = LetterState.loaded(letter);
+
+    if (letter == answer[x]) {
+      word[x] = LetterState.correct(letter);
+    } else if (answer.contains(letter)) {
+      word[x] = LetterState.wrongPlace(letter);
+    } else {
+      word[x] = LetterState.wrongTotally(letter);
+    }
 
     final newWord = word.toList();
     words[y] = newWord;

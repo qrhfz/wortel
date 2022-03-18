@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class Tile extends StatelessWidget {
   const Tile({
     this.color = const Color(0xffcfd8dc),
-    this.child,
+    this.letter = "",
     this.size = 64.0,
     Key? key,
   }) : super(key: key);
 
   final double size;
-  final Widget? child;
+  final String letter;
   final Color color;
 
   @override
@@ -18,7 +18,15 @@ class Tile extends StatelessWidget {
       width: size,
       height: size,
       color: color,
-      child: child,
+      child: Center(
+        child: Text(
+          letter,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 32,
+          ),
+        ),
+      ),
     );
   }
 }

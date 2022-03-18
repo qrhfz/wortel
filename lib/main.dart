@@ -80,18 +80,27 @@ class WordTiles extends StatelessWidget {
                 size,
                 (y) => Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: Tile(
-                    child: Center(
-                      child: Text(
-                        state.words[x][y].maybeWhen(
-                          loaded: (letter) => letter,
-                          orElse: () => "",
-                        ),
-                        style: const TextStyle(
-                          fontSize: 32,
-                        ),
-                      ),
-                    ),
+                  child: state.words[x][y].when(
+                    loaded: (letter) => Tile(letter: letter),
+                    correct: (String letter) {
+                      return Tile(
+                        letter: letter,
+                        color: Colors.green,
+                      );
+                    },
+                    empty: () => const Tile(),
+                    wrongPlace: (String letter) {
+                      return Tile(
+                        letter: letter,
+                        color: Colors.yellow,
+                      );
+                    },
+                    wrongTotally: (String letter) {
+                      return Tile(
+                        letter: letter,
+                        color: Colors.red,
+                      );
+                    },
                   ),
                 ),
               ),
