@@ -30,19 +30,28 @@ class WordCubit extends Cubit<WordState> {
   void submitLetter(String letter) {
     if (y > lastIndex) return;
 
-    final disabledLetters = _updateDisabledLetter(letter);
     final newTable = _makeNewTable(letter);
+
+    final disabledLetters = x == lastIndex
+        ? _updateDisabledLetter(letter, newTable[y])
+        : state.triedLetters;
 
     emit(WordState(newTable, disabledLetters));
     _moveCoor();
   }
 
-  KtList<String> _updateDisabledLetter(String letter) {
-    final letters = state.triedLetters.toMutableList();
+  KtList<String> _updateDisabledLetter(
+    String letter,
+    KtList<LetterState> word,
+  ) {
+    KtMutableList<String> letters = KtMutableList.empty();
 
-    if (!answer.contains(letter)) {
-      letters.add(letter);
-    }
+    word.forEach(
+      (letterState) => letterState.maybeWhen(
+        wrongTotally: (letter) => letters.add(letter),
+        orElse: () => null,
+      ),
+    );
 
     return letters;
   }
@@ -51,19 +60,35 @@ class WordCubit extends Cubit<WordState> {
     final words = state.words.toMutableList();
     final word = words[y].toMutableList();
 
-    if (letter == answer[x]) {
-      word[x] = LetterState.correct(letter);
-    } else if (answer.contains(letter)) {
-      word[x] = LetterState.wrongPlace(letter);
+    word[x] = LetterState.loaded(letter);
+    late KtList<LetterState> newWord;
+    if (x == lastIndex) {
+      newWord = word.map(
+        (a) => _evaluateLetter(
+          a.maybeWhen(
+            loaded: (letter) => letter,
+            orElse: () => "",
+          ),
+        ),
+      );
     } else {
-      word[x] = LetterState.wrongTotally(letter);
+      newWord = word.toList();
     }
 
-    final newWord = word.toList();
     words[y] = newWord;
 
     final newWords = words.toList();
     return newWords;
+  }
+
+  LetterState _evaluateLetter(String letter) {
+    if (letter == answer[x]) {
+      return LetterState.correct(letter);
+    } else if (answer.contains(letter)) {
+      return LetterState.wrongPlace(letter);
+    } else {
+      return LetterState.wrongTotally(letter);
+    }
   }
 
   void _moveCoor() {
