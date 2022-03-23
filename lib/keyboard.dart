@@ -17,25 +17,27 @@ class KeyboardRow extends StatelessWidget {
       children: List.generate(
         letters.length,
         (index) => SizedBox(
-          width: 40,
+          width: 30,
           height: 40,
           child: BlocBuilder<WordCubit, WordState>(
             builder: (context, state) {
               return state.maybeWhen(
-                game: (words, disabledLetters) => TextButton(
-                  onPressed: !disabledLetters.contains(letters[index])
-                      ? () => BlocProvider.of<WordCubit>(context)
-                          .submitLetter(letters[index])
-                      : null,
-                  child: Center(
-                    child: Text(
-                      letters[index],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                game: (___, words, disabledLetters, _, __) {
+                  return TextButton(
+                    onPressed: !disabledLetters.contains(letters[index])
+                        ? () => BlocProvider.of<WordCubit>(context)
+                            .submitLetter(letters[index])
+                        : null,
+                    child: Center(
+                      child: Text(
+                        letters[index],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
                 orElse: () => Container(),
               );
             },

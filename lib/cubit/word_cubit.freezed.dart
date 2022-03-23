@@ -18,11 +18,20 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$WordStateTearOff {
   const _$WordStateTearOff();
 
-  _Game game(
-      KtList<KtList<LetterState>> words, KtList<String> disabledLetters) {
+  _Init init() {
+    return const _Init();
+  }
+
+  _Game game(String answer, KtList<KtList<LetterState>> words,
+      [KtList<String> disabledLetters = const KtList.empty(),
+      int x = 0,
+      int y = 0]) {
     return _Game(
+      answer,
       words,
       disabledLetters,
+      x,
+      y,
     );
   }
 
@@ -40,24 +49,27 @@ const $WordState = _$WordStateTearOff();
 mixin _$WordState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            KtList<KtList<LetterState>> words, KtList<String> disabledLetters)
+    required TResult Function() init,
+    required TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)
         game,
     required TResult Function(String answer) finish,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            KtList<KtList<LetterState>> words, KtList<String> disabledLetters)?
+    TResult Function()? init,
+    TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)?
         game,
     TResult Function(String answer)? finish,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            KtList<KtList<LetterState>> words, KtList<String> disabledLetters)?
+    TResult Function()? init,
+    TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)?
         game,
     TResult Function(String answer)? finish,
     required TResult orElse(),
@@ -65,18 +77,21 @@ mixin _$WordState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_Game value) game,
     required TResult Function(_Finish value) finish,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_Game value)? game,
     TResult Function(_Finish value)? finish,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_Game value)? game,
     TResult Function(_Finish value)? finish,
     required TResult orElse(),
@@ -100,11 +115,129 @@ class _$WordStateCopyWithImpl<$Res> implements $WordStateCopyWith<$Res> {
 }
 
 /// @nodoc
+abstract class _$InitCopyWith<$Res> {
+  factory _$InitCopyWith(_Init value, $Res Function(_Init) then) =
+      __$InitCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$InitCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
+    implements _$InitCopyWith<$Res> {
+  __$InitCopyWithImpl(_Init _value, $Res Function(_Init) _then)
+      : super(_value, (v) => _then(v as _Init));
+
+  @override
+  _Init get _value => super._value as _Init;
+}
+
+/// @nodoc
+
+class _$_Init implements _Init {
+  const _$_Init();
+
+  @override
+  String toString() {
+    return 'WordState.init()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _Init);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)
+        game,
+    required TResult Function(String answer) finish,
+  }) {
+    return init();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)?
+        game,
+    TResult Function(String answer)? finish,
+  }) {
+    return init?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)?
+        game,
+    TResult Function(String answer)? finish,
+    required TResult orElse(),
+  }) {
+    if (init != null) {
+      return init();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
+    required TResult Function(_Game value) game,
+    required TResult Function(_Finish value) finish,
+  }) {
+    return init(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Init value)? init,
+    TResult Function(_Game value)? game,
+    TResult Function(_Finish value)? finish,
+  }) {
+    return init?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
+    TResult Function(_Game value)? game,
+    TResult Function(_Finish value)? finish,
+    required TResult orElse(),
+  }) {
+    if (init != null) {
+      return init(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Init implements WordState {
+  const factory _Init() = _$_Init;
+}
+
+/// @nodoc
 abstract class _$GameCopyWith<$Res> {
   factory _$GameCopyWith(_Game value, $Res Function(_Game) then) =
       __$GameCopyWithImpl<$Res>;
   $Res call(
-      {KtList<KtList<LetterState>> words, KtList<String> disabledLetters});
+      {String answer,
+      KtList<KtList<LetterState>> words,
+      KtList<String> disabledLetters,
+      int x,
+      int y});
 }
 
 /// @nodoc
@@ -118,10 +251,17 @@ class __$GameCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? answer = freezed,
     Object? words = freezed,
     Object? disabledLetters = freezed,
+    Object? x = freezed,
+    Object? y = freezed,
   }) {
     return _then(_Game(
+      answer == freezed
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
+              as String,
       words == freezed
           ? _value.words
           : words // ignore: cast_nullable_to_non_nullable
@@ -130,6 +270,14 @@ class __$GameCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
           ? _value.disabledLetters
           : disabledLetters // ignore: cast_nullable_to_non_nullable
               as KtList<String>,
+      x == freezed
+          ? _value.x
+          : x // ignore: cast_nullable_to_non_nullable
+              as int,
+      y == freezed
+          ? _value.y
+          : y // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -137,16 +285,26 @@ class __$GameCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Game implements _Game {
-  const _$_Game(this.words, this.disabledLetters);
+  const _$_Game(this.answer, this.words,
+      [this.disabledLetters = const KtList.empty(), this.x = 0, this.y = 0]);
 
   @override
+  final String answer;
+  @override
   final KtList<KtList<LetterState>> words;
+  @JsonKey()
   @override
   final KtList<String> disabledLetters;
+  @JsonKey()
+  @override
+  final int x;
+  @JsonKey()
+  @override
+  final int y;
 
   @override
   String toString() {
-    return 'WordState.game(words: $words, disabledLetters: $disabledLetters)';
+    return 'WordState.game(answer: $answer, words: $words, disabledLetters: $disabledLetters, x: $x, y: $y)';
   }
 
   @override
@@ -154,16 +312,22 @@ class _$_Game implements _Game {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Game &&
+            const DeepCollectionEquality().equals(other.answer, answer) &&
             const DeepCollectionEquality().equals(other.words, words) &&
             const DeepCollectionEquality()
-                .equals(other.disabledLetters, disabledLetters));
+                .equals(other.disabledLetters, disabledLetters) &&
+            const DeepCollectionEquality().equals(other.x, x) &&
+            const DeepCollectionEquality().equals(other.y, y));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(answer),
       const DeepCollectionEquality().hash(words),
-      const DeepCollectionEquality().hash(disabledLetters));
+      const DeepCollectionEquality().hash(disabledLetters),
+      const DeepCollectionEquality().hash(x),
+      const DeepCollectionEquality().hash(y));
 
   @JsonKey(ignore: true)
   @override
@@ -173,36 +337,39 @@ class _$_Game implements _Game {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            KtList<KtList<LetterState>> words, KtList<String> disabledLetters)
+    required TResult Function() init,
+    required TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)
         game,
     required TResult Function(String answer) finish,
   }) {
-    return game(words, disabledLetters);
+    return game(answer, words, disabledLetters, x, y);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            KtList<KtList<LetterState>> words, KtList<String> disabledLetters)?
+    TResult Function()? init,
+    TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)?
         game,
     TResult Function(String answer)? finish,
   }) {
-    return game?.call(words, disabledLetters);
+    return game?.call(answer, words, disabledLetters, x, y);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            KtList<KtList<LetterState>> words, KtList<String> disabledLetters)?
+    TResult Function()? init,
+    TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)?
         game,
     TResult Function(String answer)? finish,
     required TResult orElse(),
   }) {
     if (game != null) {
-      return game(words, disabledLetters);
+      return game(answer, words, disabledLetters, x, y);
     }
     return orElse();
   }
@@ -210,6 +377,7 @@ class _$_Game implements _Game {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_Game value) game,
     required TResult Function(_Finish value) finish,
   }) {
@@ -219,6 +387,7 @@ class _$_Game implements _Game {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_Game value)? game,
     TResult Function(_Finish value)? finish,
   }) {
@@ -228,6 +397,7 @@ class _$_Game implements _Game {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_Game value)? game,
     TResult Function(_Finish value)? finish,
     required TResult orElse(),
@@ -240,12 +410,14 @@ class _$_Game implements _Game {
 }
 
 abstract class _Game implements WordState {
-  const factory _Game(
-          KtList<KtList<LetterState>> words, KtList<String> disabledLetters) =
-      _$_Game;
+  const factory _Game(String answer, KtList<KtList<LetterState>> words,
+      [KtList<String> disabledLetters, int x, int y]) = _$_Game;
 
+  String get answer;
   KtList<KtList<LetterState>> get words;
   KtList<String> get disabledLetters;
+  int get x;
+  int get y;
   @JsonKey(ignore: true)
   _$GameCopyWith<_Game> get copyWith => throw _privateConstructorUsedError;
 }
@@ -312,8 +484,9 @@ class _$_Finish implements _Finish {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            KtList<KtList<LetterState>> words, KtList<String> disabledLetters)
+    required TResult Function() init,
+    required TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)
         game,
     required TResult Function(String answer) finish,
   }) {
@@ -323,8 +496,9 @@ class _$_Finish implements _Finish {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            KtList<KtList<LetterState>> words, KtList<String> disabledLetters)?
+    TResult Function()? init,
+    TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)?
         game,
     TResult Function(String answer)? finish,
   }) {
@@ -334,8 +508,9 @@ class _$_Finish implements _Finish {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            KtList<KtList<LetterState>> words, KtList<String> disabledLetters)?
+    TResult Function()? init,
+    TResult Function(String answer, KtList<KtList<LetterState>> words,
+            KtList<String> disabledLetters, int x, int y)?
         game,
     TResult Function(String answer)? finish,
     required TResult orElse(),
@@ -349,6 +524,7 @@ class _$_Finish implements _Finish {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_Game value) game,
     required TResult Function(_Finish value) finish,
   }) {
@@ -358,6 +534,7 @@ class _$_Finish implements _Finish {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_Game value)? game,
     TResult Function(_Finish value)? finish,
   }) {
@@ -367,6 +544,7 @@ class _$_Finish implements _Finish {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_Game value)? game,
     TResult Function(_Finish value)? finish,
     required TResult orElse(),

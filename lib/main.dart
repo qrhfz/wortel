@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
         child: BlocBuilder<WordCubit, WordState>(
           builder: (context, state) {
             return state.when(
-              game: (words, disabledLetters) {
+              game: (___, words, disabledLetters, _, __) {
                 return Column(
                   children: [
                     Padding(
@@ -77,11 +77,21 @@ class HomePage extends StatelessWidget {
                         "U",
                         "I",
                         "O",
-                        "P"
+                        "P",
                       ],
                     ),
                     const KeyboardRow(
-                      letters: ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+                      letters: [
+                        "A",
+                        "S",
+                        "D",
+                        "F",
+                        "G",
+                        "H",
+                        "J",
+                        "K",
+                        "L",
+                      ],
                     ),
                     const KeyboardRow(
                       letters: ["Z", "X", "C", "V", "B", "N", "M"],
@@ -110,6 +120,7 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
+              init: () => Container(),
             );
           },
         ),
@@ -135,19 +146,22 @@ class WordTiles extends StatelessWidget {
         (x) => Row(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(size, (y) {
-            // return Container();
             return BlocBuilder<WordCubit, WordState>(
               buildWhen: (previous, current) {
-                return previous.whenOrNull(
-                      game: (words, disabledLetters) => words[x][y],
-                    ) !=
-                    current.whenOrNull(
-                      game: (words, disabledLetters) => words[x][y],
-                    );
+                final prevLetter = previous.maybeMap(
+                  game: (value) => value.words[x][y],
+                  orElse: () => "",
+                );
+                final curLetter = current.maybeMap(
+                  game: (value) => value.words[x][y],
+                  orElse: () => "",
+                );
+                return prevLetter != curLetter;
               },
               builder: (context, state) {
                 return state.maybeWhen(
-                  game: (words, disabledLetters) => LetterTile(words[x][y]),
+                  game: (___, words, disabledLetters, _, __) =>
+                      LetterTile(words[x][y]),
                   orElse: () => Container(),
                 );
               },
