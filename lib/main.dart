@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
         child: BlocBuilder<WordCubit, WordState>(
           builder: (context, state) {
             return state.when(
-              game: (___, words, disabledLetters, _, __) {
+              game: (answer, letterList, _, __) {
                 return Column(
                   children: [
                     Padding(
@@ -153,17 +153,18 @@ class WordTiles extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: List.generate(
         size,
-        (x) => Row(
+        (y) => Row(
           mainAxisSize: MainAxisSize.min,
-          children: List.generate(size, (y) {
+          children: List.generate(size, (x) {
+            final index = y * 5 + x;
             return BlocBuilder<WordCubit, WordState>(
               buildWhen: (previous, current) {
                 final prevLetter = previous.maybeMap(
-                  game: (value) => value.words[x][y],
+                  game: (value) => value.letterList[index],
                   orElse: () => "",
                 );
                 final curLetter = current.maybeMap(
-                  game: (value) => value.words[x][y],
+                  game: (value) => value.letterList[index],
                   orElse: () => "",
                 );
                 return prevLetter != curLetter;
@@ -171,10 +172,7 @@ class WordTiles extends StatelessWidget {
               builder: (context, state) {
                 return state.maybeMap(
                   game: (state) {
-                    if (state.x == x && state.y == y) {
-                      return const LetterTile(LetterState.cursor());
-                    }
-                    final letter = state.words[x][y];
+                    final letter = state.letterList[index];
                     return LetterTile(letter);
                   },
                   orElse: () => Container(),
@@ -220,9 +218,6 @@ class LetterTile extends StatelessWidget {
             color: const Color(0xFFFF4B40),
           );
         },
-        cursor: () => const Tile(
-          color: Color(0xFF50BBEB),
-        ),
       ),
     );
   }

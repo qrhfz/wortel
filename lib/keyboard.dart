@@ -22,7 +22,7 @@ class KeyboardRow extends StatelessWidget {
           child: BlocBuilder<WordCubit, WordState>(
             builder: (context, state) {
               return state.maybeWhen(
-                game: (___, words, disabledLetters, _, __) {
+                game: (_, words, disabledLetters, __) {
                   return TextButton(
                     onPressed: !disabledLetters.contains(letters[index])
                         ? () => BlocProvider.of<WordCubit>(context)

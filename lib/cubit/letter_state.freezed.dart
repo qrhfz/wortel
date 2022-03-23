@@ -45,10 +45,6 @@ class _$LetterStateTearOff {
       letter,
     );
   }
-
-  _Cursor cursor() {
-    return const _Cursor();
-  }
 }
 
 /// @nodoc
@@ -63,7 +59,6 @@ mixin _$LetterState {
     required TResult Function(String letter) correct,
     required TResult Function(String letter) wrongPlace,
     required TResult Function(String letter) wrongTotally,
-    required TResult Function() cursor,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -73,7 +68,6 @@ mixin _$LetterState {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -83,7 +77,6 @@ mixin _$LetterState {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -94,7 +87,6 @@ mixin _$LetterState {
     required TResult Function(_Correct value) correct,
     required TResult Function(_WrongPlace value) wrongPlace,
     required TResult Function(_WrongTotally value) wrongTotally,
-    required TResult Function(_Cursor value) cursor,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -104,7 +96,6 @@ mixin _$LetterState {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -114,7 +105,6 @@ mixin _$LetterState {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -179,7 +169,6 @@ class _$_Empty implements _Empty {
     required TResult Function(String letter) correct,
     required TResult Function(String letter) wrongPlace,
     required TResult Function(String letter) wrongTotally,
-    required TResult Function() cursor,
   }) {
     return empty();
   }
@@ -192,7 +181,6 @@ class _$_Empty implements _Empty {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
   }) {
     return empty?.call();
   }
@@ -205,7 +193,6 @@ class _$_Empty implements _Empty {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
     required TResult orElse(),
   }) {
     if (empty != null) {
@@ -222,7 +209,6 @@ class _$_Empty implements _Empty {
     required TResult Function(_Correct value) correct,
     required TResult Function(_WrongPlace value) wrongPlace,
     required TResult Function(_WrongTotally value) wrongTotally,
-    required TResult Function(_Cursor value) cursor,
   }) {
     return empty(this);
   }
@@ -235,7 +221,6 @@ class _$_Empty implements _Empty {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
   }) {
     return empty?.call(this);
   }
@@ -248,7 +233,6 @@ class _$_Empty implements _Empty {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
     required TResult orElse(),
   }) {
     if (empty != null) {
@@ -329,7 +313,6 @@ class _$_Loaded implements _Loaded {
     required TResult Function(String letter) correct,
     required TResult Function(String letter) wrongPlace,
     required TResult Function(String letter) wrongTotally,
-    required TResult Function() cursor,
   }) {
     return loaded(letter);
   }
@@ -342,7 +325,6 @@ class _$_Loaded implements _Loaded {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
   }) {
     return loaded?.call(letter);
   }
@@ -355,7 +337,6 @@ class _$_Loaded implements _Loaded {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -372,7 +353,6 @@ class _$_Loaded implements _Loaded {
     required TResult Function(_Correct value) correct,
     required TResult Function(_WrongPlace value) wrongPlace,
     required TResult Function(_WrongTotally value) wrongTotally,
-    required TResult Function(_Cursor value) cursor,
   }) {
     return loaded(this);
   }
@@ -385,7 +365,6 @@ class _$_Loaded implements _Loaded {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
   }) {
     return loaded?.call(this);
   }
@@ -398,7 +377,6 @@ class _$_Loaded implements _Loaded {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -483,7 +461,6 @@ class _$_Correct implements _Correct {
     required TResult Function(String letter) correct,
     required TResult Function(String letter) wrongPlace,
     required TResult Function(String letter) wrongTotally,
-    required TResult Function() cursor,
   }) {
     return correct(letter);
   }
@@ -496,7 +473,6 @@ class _$_Correct implements _Correct {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
   }) {
     return correct?.call(letter);
   }
@@ -509,7 +485,6 @@ class _$_Correct implements _Correct {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
     required TResult orElse(),
   }) {
     if (correct != null) {
@@ -526,7 +501,6 @@ class _$_Correct implements _Correct {
     required TResult Function(_Correct value) correct,
     required TResult Function(_WrongPlace value) wrongPlace,
     required TResult Function(_WrongTotally value) wrongTotally,
-    required TResult Function(_Cursor value) cursor,
   }) {
     return correct(this);
   }
@@ -539,7 +513,6 @@ class _$_Correct implements _Correct {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
   }) {
     return correct?.call(this);
   }
@@ -552,7 +525,6 @@ class _$_Correct implements _Correct {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
     required TResult orElse(),
   }) {
     if (correct != null) {
@@ -640,7 +612,6 @@ class _$_WrongPlace implements _WrongPlace {
     required TResult Function(String letter) correct,
     required TResult Function(String letter) wrongPlace,
     required TResult Function(String letter) wrongTotally,
-    required TResult Function() cursor,
   }) {
     return wrongPlace(letter);
   }
@@ -653,7 +624,6 @@ class _$_WrongPlace implements _WrongPlace {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
   }) {
     return wrongPlace?.call(letter);
   }
@@ -666,7 +636,6 @@ class _$_WrongPlace implements _WrongPlace {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
     required TResult orElse(),
   }) {
     if (wrongPlace != null) {
@@ -683,7 +652,6 @@ class _$_WrongPlace implements _WrongPlace {
     required TResult Function(_Correct value) correct,
     required TResult Function(_WrongPlace value) wrongPlace,
     required TResult Function(_WrongTotally value) wrongTotally,
-    required TResult Function(_Cursor value) cursor,
   }) {
     return wrongPlace(this);
   }
@@ -696,7 +664,6 @@ class _$_WrongPlace implements _WrongPlace {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
   }) {
     return wrongPlace?.call(this);
   }
@@ -709,7 +676,6 @@ class _$_WrongPlace implements _WrongPlace {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
     required TResult orElse(),
   }) {
     if (wrongPlace != null) {
@@ -797,7 +763,6 @@ class _$_WrongTotally implements _WrongTotally {
     required TResult Function(String letter) correct,
     required TResult Function(String letter) wrongPlace,
     required TResult Function(String letter) wrongTotally,
-    required TResult Function() cursor,
   }) {
     return wrongTotally(letter);
   }
@@ -810,7 +775,6 @@ class _$_WrongTotally implements _WrongTotally {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
   }) {
     return wrongTotally?.call(letter);
   }
@@ -823,7 +787,6 @@ class _$_WrongTotally implements _WrongTotally {
     TResult Function(String letter)? correct,
     TResult Function(String letter)? wrongPlace,
     TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
     required TResult orElse(),
   }) {
     if (wrongTotally != null) {
@@ -840,7 +803,6 @@ class _$_WrongTotally implements _WrongTotally {
     required TResult Function(_Correct value) correct,
     required TResult Function(_WrongPlace value) wrongPlace,
     required TResult Function(_WrongTotally value) wrongTotally,
-    required TResult Function(_Cursor value) cursor,
   }) {
     return wrongTotally(this);
   }
@@ -853,7 +815,6 @@ class _$_WrongTotally implements _WrongTotally {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
   }) {
     return wrongTotally?.call(this);
   }
@@ -866,7 +827,6 @@ class _$_WrongTotally implements _WrongTotally {
     TResult Function(_Correct value)? correct,
     TResult Function(_WrongPlace value)? wrongPlace,
     TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
     required TResult orElse(),
   }) {
     if (wrongTotally != null) {
@@ -883,130 +843,4 @@ abstract class _WrongTotally implements LetterState {
   @JsonKey(ignore: true)
   _$WrongTotallyCopyWith<_WrongTotally> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$CursorCopyWith<$Res> {
-  factory _$CursorCopyWith(_Cursor value, $Res Function(_Cursor) then) =
-      __$CursorCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$CursorCopyWithImpl<$Res> extends _$LetterStateCopyWithImpl<$Res>
-    implements _$CursorCopyWith<$Res> {
-  __$CursorCopyWithImpl(_Cursor _value, $Res Function(_Cursor) _then)
-      : super(_value, (v) => _then(v as _Cursor));
-
-  @override
-  _Cursor get _value => super._value as _Cursor;
-}
-
-/// @nodoc
-
-class _$_Cursor implements _Cursor {
-  const _$_Cursor();
-
-  @override
-  String toString() {
-    return 'LetterState.cursor()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Cursor);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() empty,
-    required TResult Function(String letter) loaded,
-    required TResult Function(String letter) correct,
-    required TResult Function(String letter) wrongPlace,
-    required TResult Function(String letter) wrongTotally,
-    required TResult Function() cursor,
-  }) {
-    return cursor();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? empty,
-    TResult Function(String letter)? loaded,
-    TResult Function(String letter)? correct,
-    TResult Function(String letter)? wrongPlace,
-    TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
-  }) {
-    return cursor?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? empty,
-    TResult Function(String letter)? loaded,
-    TResult Function(String letter)? correct,
-    TResult Function(String letter)? wrongPlace,
-    TResult Function(String letter)? wrongTotally,
-    TResult Function()? cursor,
-    required TResult orElse(),
-  }) {
-    if (cursor != null) {
-      return cursor();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Empty value) empty,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Correct value) correct,
-    required TResult Function(_WrongPlace value) wrongPlace,
-    required TResult Function(_WrongTotally value) wrongTotally,
-    required TResult Function(_Cursor value) cursor,
-  }) {
-    return cursor(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Empty value)? empty,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Correct value)? correct,
-    TResult Function(_WrongPlace value)? wrongPlace,
-    TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
-  }) {
-    return cursor?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Empty value)? empty,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Correct value)? correct,
-    TResult Function(_WrongPlace value)? wrongPlace,
-    TResult Function(_WrongTotally value)? wrongTotally,
-    TResult Function(_Cursor value)? cursor,
-    required TResult orElse(),
-  }) {
-    if (cursor != null) {
-      return cursor(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Cursor implements LetterState {
-  const factory _Cursor() = _$_Cursor;
 }
