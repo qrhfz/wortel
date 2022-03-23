@@ -9,4 +9,5 @@ class LetterState with _$LetterState {
   const factory LetterState.correct(String letter) = _Correct;
   const factory LetterState.wrongPlace(String letter) = _WrongPlace;
   const factory LetterState.wrongTotally(String letter) = _WrongTotally;
+  const factory LetterState.cursor() = _Cursor;
 }

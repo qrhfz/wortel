@@ -94,7 +94,17 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     const KeyboardRow(
-                      letters: ["Z", "X", "C", "V", "B", "N", "M"],
+                      letters: [
+                        "DEL",
+                        "Z",
+                        "X",
+                        "C",
+                        "V",
+                        "B",
+                        "N",
+                        "M",
+                        "ENTER"
+                      ],
                     ),
                     const Spacer(),
                   ],
@@ -159,9 +169,14 @@ class WordTiles extends StatelessWidget {
                 return prevLetter != curLetter;
               },
               builder: (context, state) {
-                return state.maybeWhen(
-                  game: (___, words, disabledLetters, _, __) =>
-                      LetterTile(words[x][y]),
+                return state.maybeMap(
+                  game: (state) {
+                    if (state.x == x && state.y == y) {
+                      return const LetterTile(LetterState.cursor());
+                    }
+                    final letter = state.words[x][y];
+                    return LetterTile(letter);
+                  },
                   orElse: () => Container(),
                 );
               },
@@ -205,6 +220,9 @@ class LetterTile extends StatelessWidget {
             color: const Color(0xFFFF4B40),
           );
         },
+        cursor: () => const Tile(
+          color: Color(0xFF50BBEB),
+        ),
       ),
     );
   }
