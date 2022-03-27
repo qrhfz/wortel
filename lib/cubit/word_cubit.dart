@@ -16,17 +16,10 @@ class WordCubit extends Cubit<WordState> {
     _getRandomWord();
   }
   final int size;
-  int get _lastIndex => size * size - 1;
 
   void _getRandomWord() {
     final answer = wordList[Random().nextInt(wordList.length)];
-    emit(WordState.game(
-      answer,
-      KtList.from(List.generate(
-        size * size,
-        (index) => const LetterState.empty(),
-      )),
-    ));
+    emit(WordState.game(answer, const KtList.empty()));
   }
 
   void submitLetter(String letter) {
@@ -36,27 +29,16 @@ class WordCubit extends Cubit<WordState> {
     if (letter == 'DEL') {
       return _deleteLetter(current);
     } else if (letter == 'ENTER') {
-      return _evaluateWord();
+      return _evaluateWord(current);
     }
-
-    final newLetterList = _loadLetter(letter);
-
-    var newDisabledLetters = _evaluateDisabledLetters(newLetterList).toSet();
 
     final answer = current.answer;
     // finish
-    if (current.index == _lastIndex) {
+    if (current.letterList.size == size * size) {
       return emit(WordState.finish(answer));
     }
 
-    final int newIndex = current.index + 1;
-
-    emit(WordState.game(
-      answer,
-      newLetterList,
-      newDisabledLetters,
-      newIndex,
-    ));
+    emit(current.copyWith(letterList: _loadLetter(letter)));
   }
 
   KtList<String> _evaluateDisabledLetters(KtList<LetterState> letterList) {
@@ -69,18 +51,13 @@ class WordCubit extends Cubit<WordState> {
   }
 
   void _deleteLetter(_Game current) {
-    if (current.index == 0) return;
+    final mLetterList = current.letterList.toMutableList();
 
-    final letterList = current.letterList.toMutableList();
-    letterList[current.index - 1] = const LetterState.empty();
-    final newLetterList = letterList.toList();
+    if (mLetterList.isNotEmpty() && mLetterList.size % 5 != 0) {
+      mLetterList.removeLast();
+    }
 
-    return emit(WordState.game(
-      current.answer,
-      newLetterList,
-      current.disabledLetters,
-      current.index - 1,
-    ));
+    return emit(current.copyWith(letterList: mLetterList));
   }
 
   KtList<LetterState> _loadLetter(String letter) {
@@ -89,45 +66,36 @@ class WordCubit extends Cubit<WordState> {
     );
     if (current == null) return const KtList.empty();
 
-    final letterList = current.letterList.toMutableList();
-
-    final index = current.index;
-
-    letterList[index] = LetterState.loaded(letter);
+    final letterList = current.letterList.toMutableList()
+      ..add(LetterState.loaded(letter));
 
     return letterList.toList();
   }
 
-  void _evaluateWord() {
-    final current = state.mapOrNull(
-      game: (game) => game,
-    );
-    if (current == null) return;
+  void _evaluateWord(_Game current) {
+    if (current.letterList.size % 5 != 0) return;
 
-    final letterList = current.letterList.toMutableList();
+    final mLetterList = current.letterList.toMutableList();
 
-    final answer = current.answer;
-    final index = current.index;
-
-    final fromIndex = ((index - 1) / size).floor() * size;
-    final toIndex = ((index - 1) / size).ceil() * size;
+    final toIndex = current.letterList.size;
+    final fromIndex = toIndex - size;
 
     for (var i = fromIndex; i < toIndex; i++) {
-      letterList[i] = _evaluateLetter(
-        answer,
-        letterList[i].maybeMap(
-          orElse: () => '',
-          loaded: (v) => v.letter,
+      mLetterList[i] = _evaluateLetter(
+        current.answer,
+        mLetterList[i].maybeWhen(
+          loaded: (letter) => letter,
+          orElse: () => "",
         ),
         i - fromIndex,
       );
     }
 
-    emit(WordState.game(
-      answer,
-      letterList,
-      current.disabledLetters,
-      current.index,
+    final disabledLetters = _evaluateDisabledLetters(mLetterList).toSet();
+
+    emit(current.copyWith(
+      letterList: mLetterList,
+      disabledLetters: disabledLetters,
     ));
   }
 

@@ -7,7 +7,6 @@ class WordState with _$WordState {
     String answer,
     KtList<LetterState> letterList, [
     @Default(KtSet.empty()) KtSet<String> disabledLetters,
-    @Default(0) int index,
   ]) = _Game;
 
   const factory WordState.finish(
