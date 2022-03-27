@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:kt_dart/kt.dart';
 import 'package:wortel/cubit/word_cubit.dart';
 import 'package:wortel/tile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,7 @@ class HomePage extends StatelessWidget {
         child: BlocBuilder<WordCubit, WordState>(
           builder: (context, state) {
             return state.when(
-              game: (answer, letterList, _, __) {
+              game: (answer, letterList, _) {
                 return Column(
                   children: [
                     Padding(
@@ -160,11 +161,11 @@ class WordTiles extends StatelessWidget {
             return BlocBuilder<WordCubit, WordState>(
               buildWhen: (previous, current) {
                 final prevLetter = previous.maybeMap(
-                  game: (value) => value.letterList[index],
-                  orElse: () => "",
+                  game: (value) => value.letterList.elementAtOrNull(index),
+                  orElse: () => null,
                 );
                 final curLetter = current.maybeMap(
-                  game: (value) => value.letterList[index],
+                  game: (value) => value.letterList.elementAtOrNull(index),
                   orElse: () => "",
                 );
                 return prevLetter != curLetter;
@@ -172,7 +173,11 @@ class WordTiles extends StatelessWidget {
               builder: (context, state) {
                 return state.maybeMap(
                   game: (state) {
-                    final letter = state.letterList[index];
+                    final letter = state.letterList.elementAtOrElse(
+                      index,
+                      (index) => const LetterState.empty(),
+                    );
+
                     return LetterTile(letter);
                   },
                   orElse: () => Container(),

@@ -23,12 +23,11 @@ class _$WordStateTearOff {
   }
 
   _Game game(String answer, KtList<LetterState> letterList,
-      [KtSet<String> disabledLetters = const KtSet.empty(), int index = 0]) {
+      [KtSet<String> disabledLetters = const KtSet.empty()]) {
     return _Game(
       answer,
       letterList,
       disabledLetters,
-      index,
     );
   }
 
@@ -48,7 +47,7 @@ mixin _$WordState {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)
+            KtSet<String> disabledLetters)
         game,
     required TResult Function(String answer) finish,
   }) =>
@@ -57,7 +56,7 @@ mixin _$WordState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)?
+            KtSet<String> disabledLetters)?
         game,
     TResult Function(String answer)? finish,
   }) =>
@@ -66,7 +65,7 @@ mixin _$WordState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)?
+            KtSet<String> disabledLetters)?
         game,
     TResult Function(String answer)? finish,
     required TResult orElse(),
@@ -151,7 +150,7 @@ class _$_Init implements _Init {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)
+            KtSet<String> disabledLetters)
         game,
     required TResult Function(String answer) finish,
   }) {
@@ -163,7 +162,7 @@ class _$_Init implements _Init {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)?
+            KtSet<String> disabledLetters)?
         game,
     TResult Function(String answer)? finish,
   }) {
@@ -175,7 +174,7 @@ class _$_Init implements _Init {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)?
+            KtSet<String> disabledLetters)?
         game,
     TResult Function(String answer)? finish,
     required TResult orElse(),
@@ -232,8 +231,7 @@ abstract class _$GameCopyWith<$Res> {
   $Res call(
       {String answer,
       KtList<LetterState> letterList,
-      KtSet<String> disabledLetters,
-      int index});
+      KtSet<String> disabledLetters});
 }
 
 /// @nodoc
@@ -250,7 +248,6 @@ class __$GameCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
     Object? answer = freezed,
     Object? letterList = freezed,
     Object? disabledLetters = freezed,
-    Object? index = freezed,
   }) {
     return _then(_Game(
       answer == freezed
@@ -265,10 +262,6 @@ class __$GameCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
           ? _value.disabledLetters
           : disabledLetters // ignore: cast_nullable_to_non_nullable
               as KtSet<String>,
-      index == freezed
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -277,7 +270,7 @@ class __$GameCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
 
 class _$_Game implements _Game {
   const _$_Game(this.answer, this.letterList,
-      [this.disabledLetters = const KtSet.empty(), this.index = 0]);
+      [this.disabledLetters = const KtSet.empty()]);
 
   @override
   final String answer;
@@ -286,13 +279,10 @@ class _$_Game implements _Game {
   @JsonKey()
   @override
   final KtSet<String> disabledLetters;
-  @JsonKey()
-  @override
-  final int index;
 
   @override
   String toString() {
-    return 'WordState.game(answer: $answer, letterList: $letterList, disabledLetters: $disabledLetters, index: $index)';
+    return 'WordState.game(answer: $answer, letterList: $letterList, disabledLetters: $disabledLetters)';
   }
 
   @override
@@ -304,8 +294,7 @@ class _$_Game implements _Game {
             const DeepCollectionEquality()
                 .equals(other.letterList, letterList) &&
             const DeepCollectionEquality()
-                .equals(other.disabledLetters, disabledLetters) &&
-            const DeepCollectionEquality().equals(other.index, index));
+                .equals(other.disabledLetters, disabledLetters));
   }
 
   @override
@@ -313,8 +302,7 @@ class _$_Game implements _Game {
       runtimeType,
       const DeepCollectionEquality().hash(answer),
       const DeepCollectionEquality().hash(letterList),
-      const DeepCollectionEquality().hash(disabledLetters),
-      const DeepCollectionEquality().hash(index));
+      const DeepCollectionEquality().hash(disabledLetters));
 
   @JsonKey(ignore: true)
   @override
@@ -326,11 +314,11 @@ class _$_Game implements _Game {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)
+            KtSet<String> disabledLetters)
         game,
     required TResult Function(String answer) finish,
   }) {
-    return game(answer, letterList, disabledLetters, index);
+    return game(answer, letterList, disabledLetters);
   }
 
   @override
@@ -338,11 +326,11 @@ class _$_Game implements _Game {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)?
+            KtSet<String> disabledLetters)?
         game,
     TResult Function(String answer)? finish,
   }) {
-    return game?.call(answer, letterList, disabledLetters, index);
+    return game?.call(answer, letterList, disabledLetters);
   }
 
   @override
@@ -350,13 +338,13 @@ class _$_Game implements _Game {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)?
+            KtSet<String> disabledLetters)?
         game,
     TResult Function(String answer)? finish,
     required TResult orElse(),
   }) {
     if (game != null) {
-      return game(answer, letterList, disabledLetters, index);
+      return game(answer, letterList, disabledLetters);
     }
     return orElse();
   }
@@ -398,12 +386,11 @@ class _$_Game implements _Game {
 
 abstract class _Game implements WordState {
   const factory _Game(String answer, KtList<LetterState> letterList,
-      [KtSet<String> disabledLetters, int index]) = _$_Game;
+      [KtSet<String> disabledLetters]) = _$_Game;
 
   String get answer;
   KtList<LetterState> get letterList;
   KtSet<String> get disabledLetters;
-  int get index;
   @JsonKey(ignore: true)
   _$GameCopyWith<_Game> get copyWith => throw _privateConstructorUsedError;
 }
@@ -472,7 +459,7 @@ class _$_Finish implements _Finish {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)
+            KtSet<String> disabledLetters)
         game,
     required TResult Function(String answer) finish,
   }) {
@@ -484,7 +471,7 @@ class _$_Finish implements _Finish {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)?
+            KtSet<String> disabledLetters)?
         game,
     TResult Function(String answer)? finish,
   }) {
@@ -496,7 +483,7 @@ class _$_Finish implements _Finish {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String answer, KtList<LetterState> letterList,
-            KtSet<String> disabledLetters, int index)?
+            KtSet<String> disabledLetters)?
         game,
     TResult Function(String answer)? finish,
     required TResult orElse(),
