@@ -38,104 +38,113 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<WordCubit, WordState>(
-          builder: (context, state) {
-            return state.when(
-              game: (answer, letterList, _) {
-                return Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 36),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'WORTL',
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              BlocProvider.of<WordCubit>(context).reset();
-                            },
-                            icon: const Icon(Icons.refresh),
-                          )
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
-                    const Center(
-                      child: WordTiles(size: 5),
-                    ),
-                    const Spacer(),
-                    const KeyboardRow(
-                      letters: [
-                        "Q",
-                        "W",
-                        "E",
-                        "R",
-                        "T",
-                        "Y",
-                        "U",
-                        "I",
-                        "O",
-                        "P",
-                      ],
-                    ),
-                    const KeyboardRow(
-                      letters: [
-                        "A",
-                        "S",
-                        "D",
-                        "F",
-                        "G",
-                        "H",
-                        "J",
-                        "K",
-                        "L",
-                      ],
-                    ),
-                    const KeyboardRow(
-                      letters: [
-                        "DEL",
-                        "Z",
-                        "X",
-                        "C",
-                        "V",
-                        "B",
-                        "N",
-                        "M",
-                        "ENTER"
-                      ],
-                    ),
-                    const Spacer(),
-                  ],
+        child: BlocListener<WordCubit, WordState>(
+          listener: (context, state) {
+            state.whenOrNull(
+              won: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const AlertDialog(title: Text('ANDA MENANG!'));
+                  },
                 );
               },
-              finish: (answer) => Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      answer,
-                      style: const TextStyle(
-                        fontSize: 64,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        BlocProvider.of<WordCubit>(context).reset();
-                      },
-                      icon: const Icon(Icons.refresh, size: 32),
-                    )
-                  ],
-                ),
-              ),
-              init: () => Container(),
+              gameOver: (_) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const AlertDialog(title: Text('ANDA KALAH!'));
+                  },
+                );
+              },
+              warning: ((message) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(message)));
+              }),
             );
           },
+          child: BlocBuilder<WordCubit, WordState>(
+            buildWhen: (_, current) {
+              return current.maybeMap(game: (_) => true, orElse: () => false);
+            },
+            builder: (context, state) {
+              return state.maybeMap(
+                game: (_) => const Gameboard(),
+                orElse: () => Container(),
+              );
+            },
+          ),
         ),
       ),
+    );
+  }
+}
+
+class Gameboard extends StatelessWidget {
+  const Gameboard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 450,
+          padding: const EdgeInsets.symmetric(horizontal: 36),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'WORTL',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              IconButton(
+                onPressed: () {
+                  BlocProvider.of<WordCubit>(context).reset();
+                },
+                icon: const Icon(Icons.refresh),
+              )
+            ],
+          ),
+        ),
+        const Spacer(),
+        const Center(
+          child: WordTiles(size: 5),
+        ),
+        const Spacer(),
+        const KeyboardRow(
+          letters: [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "T",
+            "Y",
+            "U",
+            "I",
+            "O",
+            "P",
+          ],
+        ),
+        const KeyboardRow(
+          letters: [
+            "A",
+            "S",
+            "D",
+            "F",
+            "G",
+            "H",
+            "J",
+            "K",
+            "L",
+          ],
+        ),
+        const KeyboardRow(
+          letters: ["DEL", "Z", "X", "C", "V", "B", "N", "M", "ENTER"],
+        ),
+        const Spacer(),
+      ],
     );
   }
 }
@@ -166,22 +175,20 @@ class WordTiles extends StatelessWidget {
                 );
                 final curLetter = current.maybeMap(
                   game: (value) => value.letterList.elementAtOrNull(index),
-                  orElse: () => "",
+                  orElse: () => null,
                 );
                 return prevLetter != curLetter;
               },
               builder: (context, state) {
-                return state.maybeMap(
+                return LetterTile(state.maybeMap(
                   game: (state) {
-                    final letter = state.letterList.elementAtOrElse(
+                    return state.letterList.elementAtOrElse(
                       index,
                       (index) => const LetterState.empty(),
                     );
-
-                    return LetterTile(letter);
                   },
-                  orElse: () => Container(),
-                );
+                  orElse: () => const LetterState.empty(),
+                ));
               },
             );
           }),

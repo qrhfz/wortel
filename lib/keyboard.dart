@@ -17,9 +17,12 @@ class KeyboardRow extends StatelessWidget {
       children: List.generate(
         letters.length,
         (index) => SizedBox(
-          width: MediaQuery.of(context).size.width / 10,
+          width: 36,
           height: 48,
           child: BlocBuilder<WordCubit, WordState>(
+            buildWhen: (_, state) {
+              return state.maybeMap(orElse: () => false, game: (_) => true);
+            },
             builder: (context, state) {
               return state.maybeWhen(
                 game: (_, words, disabledLetters) {
@@ -61,10 +64,12 @@ class KeySymbol extends StatelessWidget {
       case 'DEL':
         return const Icon(Icons.keyboard_backspace);
       default:
-        return Text(letter,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ));
+        return Text(
+          letter,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        );
     }
   }
 }

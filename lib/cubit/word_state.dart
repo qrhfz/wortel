@@ -9,7 +9,13 @@ class WordState with _$WordState {
     @Default(KtSet.empty()) KtSet<String> disabledLetters,
   ]) = _Game;
 
-  const factory WordState.finish(
+  const factory WordState.gameOver(
     String answer,
-  ) = _Finish;
+  ) = _GameOver;
+
+  const factory WordState.won() = _Won;
+
+  const factory WordState.warning(
+    String message,
+  ) = _Warning;
 }
