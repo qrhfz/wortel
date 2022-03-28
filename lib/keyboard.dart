@@ -25,13 +25,16 @@ class KeyboardRow extends StatelessWidget {
             },
             builder: (context, state) {
               return state.maybeWhen(
-                game: (_, words, disabledLetters) {
+                game: (_, __, disabledLetters) {
                   return TextButton(
                     onPressed: !disabledLetters.contains(letters[index])
-                        ? () => BlocProvider.of<WordCubit>(context)
-                            .submitLetter(letters[index])
+                        ? () {
+                            BlocProvider.of<WordCubit>(context)
+                                .submitLetter(letters[index]);
+                          }
                         : null,
                     child: KeySymbol(letter: letters[index]),
+                    style: TextButton.styleFrom(primary: Colors.brown[800]),
                   );
                 },
                 orElse: () => Container(),

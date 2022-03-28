@@ -37,6 +37,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffeadbcb),
       body: SafeArea(
         child: BlocListener<WordCubit, WordState>(
           listener: (context, state) {
@@ -119,14 +120,21 @@ class Gameboard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'WORTL',
+                'WORTEL',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
+              const Spacer(),
               IconButton(
                 onPressed: () {
                   BlocProvider.of<WordCubit>(context).reset();
                 },
                 icon: const Icon(Icons.refresh),
+              ),
+              IconButton(
+                onPressed: () {
+                  BlocProvider.of<WordCubit>(context).giveUp();
+                },
+                icon: const Icon(Icons.flag),
               )
             ],
           ),
@@ -233,24 +241,29 @@ class LetterTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: state.when(
-        loaded: (letter) => Tile(letter: letter),
+        loaded: (letter) => Tile(
+          letter: letter,
+          borderColor: Colors.brown,
+        ),
         correct: (String letter) {
           return Tile(
             letter: letter,
-            color: const Color(0xFF33BA91),
+            backgroundColor: const Color(0xFF33BA91),
           );
         },
-        empty: () => const Tile(),
+        empty: () => const Tile(
+          borderColor: Colors.brown,
+        ),
         wrongPlace: (String letter) {
           return Tile(
             letter: letter,
-            color: const Color(0xFFEBB951),
+            backgroundColor: const Color(0xFFEBB951),
           );
         },
         wrongTotally: (String letter) {
           return Tile(
             letter: letter,
-            color: const Color(0xFFFF4B40),
+            backgroundColor: const Color(0xFFFF4B40),
           );
         },
       ),
