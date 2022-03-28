@@ -6703,6 +6703,8 @@ const wordList = [
   "ZUAMA",
   "ZUHUD",
   "ZUHUR",
+  "WAKTU",
+  "WARAS",
   "WARIA",
   "WARID",
   "WARIK",
