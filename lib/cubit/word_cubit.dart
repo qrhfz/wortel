@@ -151,4 +151,11 @@ class WordCubit extends Cubit<WordState> {
 
     emit(WordState.game(answer, const KtList.empty()));
   }
+
+  void giveUp() {
+    emit(state.maybeMap(
+      game: (value) => WordState.gameOver(value.answer),
+      orElse: () => const WordState.warning('error'),
+    ));
+  }
 }
