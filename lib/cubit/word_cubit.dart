@@ -157,5 +157,6 @@ class WordCubit extends Cubit<WordState> {
       game: (value) => WordState.gameOver(value.answer),
       orElse: () => const WordState.warning('error'),
     ));
+    reset();
   }
 }
