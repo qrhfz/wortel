@@ -126,7 +126,7 @@ class WordCubit extends Cubit<WordState> {
     }
 
     if (newLetterList.size == size * size && !isWinning) {
-      emit(const WordState.gameOver(""));
+      emit(WordState.gameOver(current.answer));
     }
 
     emit(current.copyWith(
@@ -148,6 +148,7 @@ class WordCubit extends Cubit<WordState> {
   void reset() {
     final answer = wordList[Random().nextInt(wordList.length)];
     dev.log(answer);
+
     emit(WordState.game(answer, const KtList.empty()));
   }
 }

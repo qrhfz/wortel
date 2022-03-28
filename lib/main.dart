@@ -45,15 +45,38 @@ class HomePage extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return const AlertDialog(title: Text('ANDA MENANG!'));
+                    return const AlertDialog(
+                      title: Center(child: Text('ANDA MENANG!')),
+                    );
                   },
                 );
               },
-              gameOver: (_) {
+              gameOver: (answer) {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return const AlertDialog(title: Text('ANDA KALAH!'));
+                    return AlertDialog(
+                      title: const Center(child: Text('Maaf Anda kalah')),
+                      content: Center(
+                        heightFactor: 1,
+                        child: Text('Jawaban yang benar adalah $answer'),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            BlocProvider.of<WordCubit>(context).reset();
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Reset'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Oke'),
+                        ),
+                      ],
+                    );
                   },
                 );
               },
