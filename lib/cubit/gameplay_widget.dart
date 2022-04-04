@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wortel/cubit/word_cubit.dart';
 import 'package:wortel/word_grid.dart';
 
 import '../keyboard.dart';
