@@ -33,7 +33,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('WORTEL'),
+        backgroundColor: const Color(0xFF33BA91),
+        title: Image.asset(
+          "assets/splash.png",
+          height: 64,
+        ),
         actions: [
           IconButton(
             onPressed: () {
