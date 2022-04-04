@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class Tile extends StatelessWidget {
   const Tile({
     this.backgroundColor,
-    this.borderColor,
-    this.letter = "",
+    required this.letter,
     this.size = 64.0,
     Key? key,
   }) : super(key: key);
@@ -12,7 +11,6 @@ class Tile extends StatelessWidget {
   final double size;
   final String letter;
   final Color? backgroundColor;
-  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +19,53 @@ class Tile extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: backgroundColor,
-        border: borderColor != null ? Border.all(color: borderColor!) : null,
+        border: Border.all(color: backgroundColor ?? Colors.brown),
       ),
       child: Center(
         child: Text(
           letter,
           style: TextStyle(
-            color: backgroundColor == null ? Colors.brown : Colors.white,
+            color: backgroundColor != null ? Colors.white : null,
             fontSize: 32,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class AnimatedTile extends StatefulWidget {
+  const AnimatedTile({Key? key, required this.letter, this.backgroundColor})
+      : super(key: key);
+
+  final String letter;
+  final Color? backgroundColor;
+
+  @override
+  State<AnimatedTile> createState() => _AnimatedTileState();
+}
+
+class _AnimatedTileState extends State<AnimatedTile>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(seconds: 1),
+    vsync: this,
+  )..forward();
+  final Tween<double> _tween = Tween(begin: 0.5, end: 1);
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: _tween
+          .animate(CurvedAnimation(parent: _controller, curve: Curves.ease)),
+      child: Tile(
+        letter: widget.letter,
+        backgroundColor: widget.backgroundColor,
       ),
     );
   }

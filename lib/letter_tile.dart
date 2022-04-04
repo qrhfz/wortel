@@ -19,25 +19,22 @@ class LetterTile extends StatelessWidget {
       child: state.when(
         loaded: (letter) => Tile(
           letter: letter,
-          borderColor: Colors.brown,
         ),
+        empty: () => const Tile(letter: ""),
         correct: (String letter) {
-          return Tile(
+          return AnimatedTile(
             letter: letter,
             backgroundColor: const Color(0xFF33BA91),
           );
         },
-        empty: () => const Tile(
-          borderColor: Colors.brown,
-        ),
         wrongPlace: (String letter) {
-          return Tile(
+          return AnimatedTile(
             letter: letter,
             backgroundColor: const Color(0xFFEBB951),
           );
         },
         wrongTotally: (String letter) {
-          return Tile(
+          return AnimatedTile(
             letter: letter,
             backgroundColor: const Color(0xFFFF4B40),
           );
