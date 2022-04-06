@@ -4287,6 +4287,7 @@ const wordList = [
   "NILAU",
   "NILON",
   "NINIK",
+  "NINJA",
   "NIPAH",
   "NIPAS",
   "NIPIS",
