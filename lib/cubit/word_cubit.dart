@@ -57,19 +57,22 @@ class WordCubit extends Cubit<WordState> {
 
   KtList<LetterState> _loadLetter(_Game current, String letter) {
     final letterList = current.letterList.toMutableList();
-    final lastLetterEvaluated = letterList.find((p0) => true)?.maybeMap(
+    final lastLetterEvaluated = letterList
+            .elementAtOrNull(letterList.lastIndex)
+            ?.map(
+              empty: (_) => false,
               loaded: (_) => false,
-              orElse: () => true,
+              correct: (_) => true,
+              wrongPlace: (_) => true,
+              wrongTotally: (_) => true,
             ) ??
         true; // means letter list is empty. empty list is assumed to be equivalent to evaluated.
 
-    if (letterList.size != size & size ||
-        letterList.size % size > 0 ||
-        lastLetterEvaluated) {
+    if (lastLetterEvaluated || letterList.size % size > 0) {
       letterList.add(LetterState.loaded(letter));
     }
 
-    return letterList.toList();
+    return letterList;
   }
 
   void _evaluateWord(_Game current) {
