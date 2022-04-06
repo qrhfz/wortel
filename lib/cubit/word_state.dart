@@ -11,9 +11,13 @@ class WordState with _$WordState {
 
   const factory WordState.gameOver(
     String answer,
+    KtList<LetterState> letterList,
   ) = _GameOver;
 
-  const factory WordState.won() = _Won;
+  const factory WordState.won(
+    String answer,
+    KtList<LetterState> letterList,
+  ) = _Won;
 
   const factory WordState.warning(
     String message,

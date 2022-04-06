@@ -31,14 +31,18 @@ class _$WordStateTearOff {
     );
   }
 
-  _GameOver gameOver(String answer) {
+  _GameOver gameOver(String answer, KtList<LetterState> letterList) {
     return _GameOver(
       answer,
+      letterList,
     );
   }
 
-  _Won won() {
-    return const _Won();
+  _Won won(String answer, KtList<LetterState> letterList) {
+    return _Won(
+      answer,
+      letterList,
+    );
   }
 
   _Warning warning(String message) {
@@ -59,8 +63,10 @@ mixin _$WordState {
     required TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)
         game,
-    required TResult Function(String answer) gameOver,
-    required TResult Function() won,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        gameOver,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        won,
     required TResult Function(String message) warning,
   }) =>
       throw _privateConstructorUsedError;
@@ -70,8 +76,8 @@ mixin _$WordState {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
   }) =>
       throw _privateConstructorUsedError;
@@ -81,8 +87,8 @@ mixin _$WordState {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
     required TResult orElse(),
   }) =>
@@ -174,8 +180,10 @@ class _$_Init implements _Init {
     required TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)
         game,
-    required TResult Function(String answer) gameOver,
-    required TResult Function() won,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        gameOver,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        won,
     required TResult Function(String message) warning,
   }) {
     return init();
@@ -188,8 +196,8 @@ class _$_Init implements _Init {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
   }) {
     return init?.call();
@@ -202,8 +210,8 @@ class _$_Init implements _Init {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
     required TResult orElse(),
   }) {
@@ -350,8 +358,10 @@ class _$_Game implements _Game {
     required TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)
         game,
-    required TResult Function(String answer) gameOver,
-    required TResult Function() won,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        gameOver,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        won,
     required TResult Function(String message) warning,
   }) {
     return game(answer, letterList, disabledLetters);
@@ -364,8 +374,8 @@ class _$_Game implements _Game {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
   }) {
     return game?.call(answer, letterList, disabledLetters);
@@ -378,8 +388,8 @@ class _$_Game implements _Game {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
     required TResult orElse(),
   }) {
@@ -445,7 +455,7 @@ abstract class _Game implements WordState {
 abstract class _$GameOverCopyWith<$Res> {
   factory _$GameOverCopyWith(_GameOver value, $Res Function(_GameOver) then) =
       __$GameOverCopyWithImpl<$Res>;
-  $Res call({String answer});
+  $Res call({String answer, KtList<LetterState> letterList});
 }
 
 /// @nodoc
@@ -460,12 +470,17 @@ class __$GameOverCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? answer = freezed,
+    Object? letterList = freezed,
   }) {
     return _then(_GameOver(
       answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as String,
+      letterList == freezed
+          ? _value.letterList
+          : letterList // ignore: cast_nullable_to_non_nullable
+              as KtList<LetterState>,
     ));
   }
 }
@@ -473,14 +488,16 @@ class __$GameOverCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GameOver implements _GameOver {
-  const _$_GameOver(this.answer);
+  const _$_GameOver(this.answer, this.letterList);
 
   @override
   final String answer;
+  @override
+  final KtList<LetterState> letterList;
 
   @override
   String toString() {
-    return 'WordState.gameOver(answer: $answer)';
+    return 'WordState.gameOver(answer: $answer, letterList: $letterList)';
   }
 
   @override
@@ -488,12 +505,16 @@ class _$_GameOver implements _GameOver {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _GameOver &&
-            const DeepCollectionEquality().equals(other.answer, answer));
+            const DeepCollectionEquality().equals(other.answer, answer) &&
+            const DeepCollectionEquality()
+                .equals(other.letterList, letterList));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(answer));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(answer),
+      const DeepCollectionEquality().hash(letterList));
 
   @JsonKey(ignore: true)
   @override
@@ -507,11 +528,13 @@ class _$_GameOver implements _GameOver {
     required TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)
         game,
-    required TResult Function(String answer) gameOver,
-    required TResult Function() won,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        gameOver,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        won,
     required TResult Function(String message) warning,
   }) {
-    return gameOver(answer);
+    return gameOver(answer, letterList);
   }
 
   @override
@@ -521,11 +544,11 @@ class _$_GameOver implements _GameOver {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
   }) {
-    return gameOver?.call(answer);
+    return gameOver?.call(answer, letterList);
   }
 
   @override
@@ -535,13 +558,13 @@ class _$_GameOver implements _GameOver {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
     required TResult orElse(),
   }) {
     if (gameOver != null) {
-      return gameOver(answer);
+      return gameOver(answer, letterList);
     }
     return orElse();
   }
@@ -588,9 +611,11 @@ class _$_GameOver implements _GameOver {
 }
 
 abstract class _GameOver implements WordState {
-  const factory _GameOver(String answer) = _$_GameOver;
+  const factory _GameOver(String answer, KtList<LetterState> letterList) =
+      _$_GameOver;
 
   String get answer;
+  KtList<LetterState> get letterList;
   @JsonKey(ignore: true)
   _$GameOverCopyWith<_GameOver> get copyWith =>
       throw _privateConstructorUsedError;
@@ -600,6 +625,7 @@ abstract class _GameOver implements WordState {
 abstract class _$WonCopyWith<$Res> {
   factory _$WonCopyWith(_Won value, $Res Function(_Won) then) =
       __$WonCopyWithImpl<$Res>;
+  $Res call({String answer, KtList<LetterState> letterList});
 }
 
 /// @nodoc
@@ -610,26 +636,60 @@ class __$WonCopyWithImpl<$Res> extends _$WordStateCopyWithImpl<$Res>
 
   @override
   _Won get _value => super._value as _Won;
+
+  @override
+  $Res call({
+    Object? answer = freezed,
+    Object? letterList = freezed,
+  }) {
+    return _then(_Won(
+      answer == freezed
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
+              as String,
+      letterList == freezed
+          ? _value.letterList
+          : letterList // ignore: cast_nullable_to_non_nullable
+              as KtList<LetterState>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Won implements _Won {
-  const _$_Won();
+  const _$_Won(this.answer, this.letterList);
+
+  @override
+  final String answer;
+  @override
+  final KtList<LetterState> letterList;
 
   @override
   String toString() {
-    return 'WordState.won()';
+    return 'WordState.won(answer: $answer, letterList: $letterList)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Won);
+        (other.runtimeType == runtimeType &&
+            other is _Won &&
+            const DeepCollectionEquality().equals(other.answer, answer) &&
+            const DeepCollectionEquality()
+                .equals(other.letterList, letterList));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(answer),
+      const DeepCollectionEquality().hash(letterList));
+
+  @JsonKey(ignore: true)
+  @override
+  _$WonCopyWith<_Won> get copyWith =>
+      __$WonCopyWithImpl<_Won>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -638,11 +698,13 @@ class _$_Won implements _Won {
     required TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)
         game,
-    required TResult Function(String answer) gameOver,
-    required TResult Function() won,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        gameOver,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        won,
     required TResult Function(String message) warning,
   }) {
-    return won();
+    return won(answer, letterList);
   }
 
   @override
@@ -652,11 +714,11 @@ class _$_Won implements _Won {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
   }) {
-    return won?.call();
+    return won?.call(answer, letterList);
   }
 
   @override
@@ -666,13 +728,13 @@ class _$_Won implements _Won {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
     required TResult orElse(),
   }) {
     if (won != null) {
-      return won();
+      return won(answer, letterList);
     }
     return orElse();
   }
@@ -719,7 +781,12 @@ class _$_Won implements _Won {
 }
 
 abstract class _Won implements WordState {
-  const factory _Won() = _$_Won;
+  const factory _Won(String answer, KtList<LetterState> letterList) = _$_Won;
+
+  String get answer;
+  KtList<LetterState> get letterList;
+  @JsonKey(ignore: true)
+  _$WonCopyWith<_Won> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -788,8 +855,10 @@ class _$_Warning implements _Warning {
     required TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)
         game,
-    required TResult Function(String answer) gameOver,
-    required TResult Function() won,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        gameOver,
+    required TResult Function(String answer, KtList<LetterState> letterList)
+        won,
     required TResult Function(String message) warning,
   }) {
     return warning(message);
@@ -802,8 +871,8 @@ class _$_Warning implements _Warning {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
   }) {
     return warning?.call(message);
@@ -816,8 +885,8 @@ class _$_Warning implements _Warning {
     TResult Function(String answer, KtList<LetterState> letterList,
             KtSet<String> disabledLetters)?
         game,
-    TResult Function(String answer)? gameOver,
-    TResult Function()? won,
+    TResult Function(String answer, KtList<LetterState> letterList)? gameOver,
+    TResult Function(String answer, KtList<LetterState> letterList)? won,
     TResult Function(String message)? warning,
     required TResult orElse(),
   }) {

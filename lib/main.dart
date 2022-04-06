@@ -10,7 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -31,65 +30,90 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF33BA91),
-        title: Image.asset(
-          "assets/splash.png",
-          height: 64,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              BlocProvider.of<WordCubit>(context).reset();
-            },
-            icon: const Icon(Icons.refresh),
-          ),
-          IconButton(
-            onPressed: () {
-              BlocProvider.of<WordCubit>(context).giveUp();
-            },
-            icon: const Icon(Icons.flag),
-          )
-        ],
-      ),
-      body: BlocListener<WordCubit, WordState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            won: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return const WinningDialog();
-                },
-              );
-            },
-            gameOver: (answer) {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return LosingDialog(answer);
-                },
-              );
-            },
-            warning: ((message) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(message)));
-            }),
-          );
-        },
-        child: BlocBuilder<WordCubit, WordState>(
-          buildWhen: (_, current) {
-            return current.maybeMap(game: (_) => true, orElse: () => false);
-          },
-          builder: (context, state) {
-            return state.maybeMap(
-              game: (_) => const GameplayWidget(),
-              orElse: () => Container(),
+    return BlocConsumer<WordCubit, WordState>(
+      listener: (context, state) {
+        state.mapOrNull(
+          won: (_) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const WinningDialog();
+              },
             );
           },
-        ),
-      ),
+          gameOver: (state) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return LosingDialog(state.answer);
+              },
+            );
+          },
+          warning: (state) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.message)));
+          },
+        );
+      },
+      // buildWhen: (_, current) {
+      //   return current.maybeMap(
+      //     game: (_) => true,
+      //     won: (_) => true,
+      //     gameOver: (_) => true,
+      //     orElse: () => false,
+      //   );
+      // },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: const Color(0xFF33BA91),
+            title: Image.asset(
+              "assets/splash.png",
+              height: 64,
+            ),
+            actions: [
+              state.maybeMap(
+                gameOver: (_) => const ResetButton(),
+                won: (_) => const ResetButton(),
+                orElse: () => const GiveupButton(),
+              )
+            ],
+          ),
+          body: const GameplayWidget(),
+        );
+      },
+    );
+  }
+}
+
+class GiveupButton extends StatelessWidget {
+  const GiveupButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        BlocProvider.of<WordCubit>(context).giveUp();
+      },
+      icon: const Icon(Icons.flag),
+    );
+  }
+}
+
+class ResetButton extends StatelessWidget {
+  const ResetButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        BlocProvider.of<WordCubit>(context).reset();
+      },
+      icon: const Icon(Icons.refresh),
     );
   }
 }

@@ -26,25 +26,18 @@ class WordGrid extends StatelessWidget {
             final index = y * 5 + x;
             return BlocBuilder<WordCubit, WordState>(
               buildWhen: (previous, current) {
-                final prevLetter = previous.maybeMap(
-                  game: (value) => value.letterList.elementAtOrNull(index),
-                  orElse: () => null,
-                );
-                final curLetter = current.maybeMap(
-                  game: (value) => value.letterList.elementAtOrNull(index),
-                  orElse: () => null,
-                );
-                return prevLetter != curLetter;
+                return previous != current;
               },
               builder: (context, state) {
-                return LetterTile(state.maybeMap(
-                  game: (state) {
-                    return state.letterList.elementAtOrElse(
-                      index,
-                      (index) => const LetterState.empty(),
-                    );
-                  },
-                  orElse: () => const LetterState.empty(),
+                final letterList = state.maybeMap(
+                  game: (value) => value.letterList,
+                  gameOver: (value) => value.letterList,
+                  won: (value) => value.letterList,
+                  orElse: () => const KtList.empty(),
+                );
+                return LetterTile(letterList.elementAtOrElse(
+                  index,
+                  (_) => const LetterState.empty(),
                 ));
               },
             );

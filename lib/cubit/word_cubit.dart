@@ -122,14 +122,12 @@ class WordCubit extends Cubit<WordState> {
     final disabledLetters = _evaluateDisabledLetters(newLetterList).toSet();
 
     if (isWinning) {
-      emit(const WordState.won());
+      return emit(WordState.won(current.answer, newLetterList));
+    } else if (newLetterList.size == size * size && !isWinning) {
+      return emit(WordState.gameOver(current.answer, newLetterList));
     }
 
-    if (newLetterList.size == size * size && !isWinning) {
-      emit(WordState.gameOver(current.answer));
-    }
-
-    emit(current.copyWith(
+    return emit(current.copyWith(
       letterList: newLetterList,
       disabledLetters: disabledLetters,
     ));
@@ -154,9 +152,8 @@ class WordCubit extends Cubit<WordState> {
 
   void giveUp() {
     emit(state.maybeMap(
-      game: (value) => WordState.gameOver(value.answer),
+      game: (value) => WordState.gameOver(value.answer, value.letterList),
       orElse: () => const WordState.warning('error'),
     ));
-    reset();
   }
 }
