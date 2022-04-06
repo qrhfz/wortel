@@ -19,7 +19,7 @@ class Tile extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: backgroundColor,
-        border: Border.all(color: backgroundColor ?? Colors.brown),
+        border: Border.all(color: backgroundColor ?? Colors.grey),
       ),
       child: Center(
         child: Text(
