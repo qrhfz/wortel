@@ -95,7 +95,7 @@ class WordCubit extends Cubit<WordState> {
         )
         .joinToString(separator: "");
 
-    if (!wordList.contains(myAnswer)) {
+    if (wordList[myAnswer] == null) {
       emit(const WordState.warning("Bukan kata dalam KBBI!"));
       return emit(current);
     }
@@ -147,7 +147,8 @@ class WordCubit extends Cubit<WordState> {
   }
 
   void reset() {
-    final answer = wordList[Random().nextInt(wordList.length)];
+    final answer =
+        wordList.entries.elementAt(Random().nextInt(wordList.length)).key;
     dev.log(answer);
 
     emit(WordState.game(answer, const KtList.empty()));
